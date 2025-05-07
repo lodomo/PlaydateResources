@@ -1,5 +1,5 @@
 ##############################################################################
-# Basic Makefile for compiling for Playdate.
+# Basic Makefile for compiling Lua for Playdate.
 #
 # The game will be compiled using the Playdate SDK compiler.
 # The source code is expected to be in a folder called "source".
@@ -30,7 +30,9 @@ all: $(OUTPUT_FILE)
 $(OUTPUT_FILE): $(SOURCE_FOLDER)/*
 	$(COMPILER) $(SOURCE_FOLDER) $(OUTPUT_FILE)
 
-run: $(OUTPUT_FILE)
+# I spell "run" wrong a lot.
+# This will compile a brand new version and start up the simulator.
+run nur rnu unr urn ru: clean $(OUTPUT_FILE)
 	PlaydateSimulator $(OUTPUT_FILE)
 
 clean claen clena:

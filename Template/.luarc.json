@@ -1,0 +1,18 @@
+{
+    "diagnostics.globals": [
+        "playdate",
+        "import",
+        "Draw_Line",
+        "Lerp",
+        "LerpPerp",
+        "DrawLine",
+        "pd",
+        "gfx",
+        "PointOOP",
+        "GetCurrentTimeMilliseconds",
+        "DEBUG"
+    ],
+    "diagnostics.disable": [
+        "duplicate-set-field"
+    ]
+}
