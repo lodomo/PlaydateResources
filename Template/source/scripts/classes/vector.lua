@@ -1,11 +1,7 @@
-Vector = {}
-Vector.__index = Vector
-setmetatable(Vector, { __index = Point })
+Vector = Class("vector", Point)
 
-function Vector:new(x, y)
-    local obj = Point:new(x, y)
-    setmetatable(obj, self)
-    return obj
+function Vector:init(x, y)
+    self.__super.init(self, x, y)
 end
 
 function Vector:draw(origin)

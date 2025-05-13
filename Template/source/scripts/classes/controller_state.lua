@@ -1,3 +1,4 @@
+--[[ NEEDS FIXING
 ControllerState = {}
 ControllerState.__index = ControllerState
 setmetatable(ControllerState, { __index = Class })
@@ -87,3 +88,4 @@ function ControllerState:pressedWithin(button, ms)
     button = button:lower()
     return self[button]:pressedWithin(ms)
 end
+--]]

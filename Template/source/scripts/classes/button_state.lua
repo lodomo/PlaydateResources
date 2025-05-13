@@ -1,3 +1,4 @@
+--[[ NEEDS FIXING
 ButtonState = {}
 ButtonState.__index = ButtonState
 setmetatable(ButtonState, { __index = Class })
@@ -36,3 +37,4 @@ end
 function ButtonState:pressedWithin(ms)
     return (GetCurrentTimeMilliseconds - self.time) <= ms
 end
+--]]

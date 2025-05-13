@@ -1,14 +1,20 @@
-Point = {}
-Point.__index = Point
-setmetatable(Point, { __index = Class })
+Point = Class("point")
+
+---[[ Operator Overloading
+local op = Point
+function op:__add(other)
+    return getmetatable(self)(self.x + other.x, self.y + other.y)
+end
+
+function op:__unm()
+    return getmetatable(self)(-self.x, -self.y)
+end
+--]]
 
 -- Class Data Members
-function Point:new(x, y)
-    local obj = Class:new()
-    setmetatable(obj, self)
-    obj.x = x or 0
-    obj.y = y or 0
-    return obj
+function Point:init(x, y)
+    self.x = x or 0
+    self.y = y or 0
 end
 
 function Point:move_x(x)
@@ -25,9 +31,10 @@ function Point:move(x, y)
 end
 
 function Point:draw(radius)
-    if radius == nil then
+    if not radius then
         return DrawPixel(self.x, self.y)
     end
 
     return FillCircleAtPoint(self.x, self.y, radius)
 end
+

@@ -13,6 +13,7 @@
         "DEBUG"
     ],
     "diagnostics.disable": [
-        "duplicate-set-field"
+        "duplicate-set-field",
+        "undefined-field"
     ]
 }
