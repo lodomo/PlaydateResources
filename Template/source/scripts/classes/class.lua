@@ -1,7 +1,21 @@
+--[ CLASS MAP ]--
+local ClassMap = {
+    class_by_num = {},
+    num_by_class = {},
+}
+
+function ClassMap:addClass(class)
+    self.class_by_num[#self.class_by_num + 1] = class
+    self.num_by_class[class.__type] = #self.class_by_num
+end
+
 ---[ BASE OBJECT CLASS ]---
 local Object = {}
 Object.__index = Object
 Object.__type = "object"
+
+ClassMap.class_by_num[1] = Object
+ClassMap.num_by_class[Object.__type] = 1
 
 function Object:new(...)
     local instance = setmetatable({}, self)
@@ -13,25 +27,39 @@ function Object:type()
     return self.__type
 end
 
+function Object:typeIndex()
+    return ClassMap.num_by_class[self.__type]
+end
+
 function Object:typeOf(type_name)
-    if self:type() == type_name then return true end
-    if self.__super then return self.__super:typeOf(type_name) end
+    local other_index = ClassMap.num_by_class[type_name]
+    if self:typeIndex() == other_index then return true end
+
+    for _, v in pairs(self.__super_types) do
+        if v == other_index then return true end
+    end
+
     return false
 end
 
---[[ TODO BETTER
-function Object:copy()
-    local temp = getmetatable(self)()
-    for k, v in pairs(self) do
-        if type(v) == "table" then
-            temp[k] = v:copy()
+function Object.deep_copy(source, dest)
+    for key, value in pairs(source) do
+        if type(value) ~= "table" then
+            dest[key] = value
+        elseif value.copy then
+            dest[key] = value:copy()
         else
-            temp[k] = v
+            dest[key] = {}
+            Object.copy_table(value, dest[key])
         end
     end
+end
+
+function Object:copy()
+    local temp = getmetatable(self)()
+    self.deep_copy(self, temp)
     return temp
 end
---]]
 
 function Object:print()
     print("Class: " .. self:type())
@@ -57,6 +85,8 @@ function Class(name, base)
     class.__index = class
     class.__type = name
 
+    ClassMap:addClass(class)
+
     setmetatable(class, {
         __index = base,
         __call = function(_, ...)
@@ -64,8 +94,9 @@ function Class(name, base)
         end
     })
 
-    class.__super = base
-    class.__super_types = { base }
+    local base_num = ClassMap.num_by_class[base.__type]
+    class.__super = base_num
+    class.__super_types = { base_num }
 
     if base.__super_types then
         for i = 1, #base.__super_types do

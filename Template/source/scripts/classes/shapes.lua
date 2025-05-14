@@ -1,3 +1,4 @@
+--[[ NEEDS TO BE REDONE
 Shape = {}
 Shape.__index = Shape
 Shape.name = "Default Shape"
@@ -42,6 +43,7 @@ end
 -- A fixed rect is drawn from the top left corner, to the bottom right corner
 -- (assuming the width and height are positive)
 --]]
+--[[
 Rect = {}
 Rect.__index = Rect
 Rect.name = "Default Rectangle"
@@ -60,3 +62,4 @@ function Rect:draw()
 
     return DrawRect(self.x, self.y, self.width, self.height)
 end
+--]]

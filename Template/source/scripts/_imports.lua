@@ -56,7 +56,7 @@ import "scripts/utils"
 --- These MAY use the Playdate Globals
 import("scripts/classes/class") -- Everything depends on this
 
---import("scripts/classes/delta_time")
+import("scripts/classes/delta_time")
 
 import("scripts/classes/point")
 import("scripts/classes/vector") -- Depends on point
