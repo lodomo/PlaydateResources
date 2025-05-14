@@ -25,7 +25,6 @@ import "CoreLibs/graphics"
 pd = playdate
 GetCurrentTimeMilliseconds = pd.getCurrentTimeMilliseconds
 
-
 gfx = pd.graphics
 DrawPixel = gfx.drawPixel
 DrawLine = gfx.drawLine
@@ -34,7 +33,6 @@ DrawRect = gfx.drawRect
 DrawFillRect = gfx.fillRect
 
 InputHandlers = pd.inputHandlers
-
 --]]
 
 ---[[ Global Constants
@@ -47,20 +45,19 @@ S_HEIGHT = 240
 
 ---[[ Utilities and Helpers
 -- These MAY use the Playdate Globals
---import "scripts/debug"
 import "scripts/utils"
 --]]
 
 
 ---[[ Class Imports
 --- These MAY use the Playdate Globals
-import("scripts/classes/class") -- Everything depends on this
+import("scripts/libs/class") -- Every class depends on this
 
 import("scripts/classes/delta_time")
 
 import("scripts/classes/point")
-import("scripts/classes/vector") -- Depends on point
---import("scripts/classes/shapes") -- Depends on point
+    import("scripts/classes/vector") -- Extends point
+    --import("scripts/classes/shapes") -- Extends point
 
 -- import("scripts/classes/button_state")
 -- import("scripts/classes/controller_state") -- Depends on button_state

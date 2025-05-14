@@ -6,9 +6,19 @@ function op:__add(other)
     return getmetatable(self)(self.x + other.x, self.y + other.y)
 end
 
+function op:__sub(other)
+    return getmetatable(self)(self.x - other.x, self.y - other.y)
+end
+
 function op:__unm()
     return getmetatable(self)(-self.x, -self.y)
 end
+
+-- Orthogonal Projection
+function op:__idiv(other)
+    return getmetatable(self)(self.x, other.y)
+end
+
 --]]
 
 -- Class Data Members
