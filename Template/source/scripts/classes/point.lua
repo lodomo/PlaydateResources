@@ -2,23 +2,42 @@ Point = Class("point")
 
 ---[[ Operator Overloading
 local op = Point
+
+-- self + other
 function op:__add(other)
     return getmetatable(self)(self.x + other.x, self.y + other.y)
 end
 
+-- self - other
 function op:__sub(other)
     return getmetatable(self)(self.x - other.x, self.y - other.y)
 end
 
+-- -self
 function op:__unm()
     return getmetatable(self)(-self.x, -self.y)
 end
 
+-- self // other
 -- Orthogonal Projection
 function op:__idiv(other)
     return getmetatable(self)(self.x, other.y)
 end
 
+-- self == other
+function op:__eq(other)
+    return self.x == other.x and self.y == other.y
+end
+
+-- self < other
+function op:__lt(other)
+    return self.x < other.x and self.y < other.y
+end
+
+-- self <= other
+function op:__le(other)
+    return self.x <= other.x and self.y <= other.y
+end
 --]]
 
 -- Class Data Members

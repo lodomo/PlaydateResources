@@ -4,6 +4,29 @@ function Vector:init(x, y)
     self.__super.init(self, x, y)
 end
 
+---[[ Operator Overloading
+local op = ClassName
+-- self + other - Handled by Point
+-- self - other - Handled by Point
+-- -self - Handled by Point
+-- self // other - Orthogonal Projection - Handled by Point
+-- self == other - Handled by Point
+-- self < other - Handled by Point
+-- self <= other - Handled by Point
+
+-- self * other - Dot Product NOT 
+function op:__mul(other)
+    if other.typeOf and other:typeOf("vector") then
+        return (self.x * other.x) + (self.y * other.y)
+    end
+end
+
+-- #self
+function op:__len()
+    return math.sqrt(self.x * self.x + self.y * self.y)
+end
+--]]
+
 function Vector:draw(origin)
     if origin == nil then
         return DrawLine(0, 0, self.x, self.y)
