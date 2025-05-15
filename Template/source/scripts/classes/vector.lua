@@ -1,11 +1,11 @@
 Vector = Class("vector", Point)
 
 function Vector:init(x, y)
-    self.__super.init(self, x, y)
+    self.__superInit(self, x, y)
 end
 
 ---[[ Operator Overloading
-local op = ClassName
+local op = Vector
 -- self + other - Handled by Point
 -- self - other - Handled by Point
 -- -self - Handled by Point

@@ -119,6 +119,13 @@ function Object:print()
     end
 end
 
+function Object:__superInit(...)
+    local super = ClassMap.class_by_num[self.__super]
+    if super and super.init then
+        super.init(self, ...)
+    end
+end
+
 --  CLASS CREATION FUNCTION
 --  Create a new class that inherits from the base class.
 --  @param name The name of the new class.
