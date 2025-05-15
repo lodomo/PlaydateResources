@@ -38,7 +38,7 @@ InputHandlers = pd.inputHandlers
 ---[[ Global Constants
 PI = math.pi
 TAU = math.pi * 2
-INF = 2147483647
+INF = math.huge
 S_WIDTH = 400
 S_HEIGHT = 240
 --]]
