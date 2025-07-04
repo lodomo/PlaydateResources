@@ -1,6 +1,8 @@
 import "scripts/_imports"
 
+local pd = playdate
 pd.display.setRefreshRate(50)
+
 local delta_time = DeltaTime()
 
 local function init()

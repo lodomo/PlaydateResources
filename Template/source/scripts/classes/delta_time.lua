@@ -1,6 +1,7 @@
 DeltaTime = Class("deltatime")
 
-local INT_MAX = 2^31 - 1
+local INT_MAX = math.huge
+local GetCurrentTimeMilliseconds = playdate.getCurrentTimeMilliseconds
 
 function DeltaTime:init()
     self.current = 0

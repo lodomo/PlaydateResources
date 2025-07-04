@@ -21,7 +21,7 @@ import "CoreLibs/graphics"
 -- import "CoreLibs/ui"
 --]]
 
----[[ Playdate Globals
+--[[ Handy Playdate SDK References
 pd = playdate
 GetCurrentTimeMilliseconds = pd.getCurrentTimeMilliseconds
 
