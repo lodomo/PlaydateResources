@@ -1,4 +1,4 @@
-Player = Class("player", Point)
+BouncingBlock = Class("bouncingblock", Point)
 
 ---[[ Import Playdate SDK Globals
 local pd = playdate
@@ -6,7 +6,7 @@ local gfx = pd.graphics
 --]]
 
 -- Define Data Members
-function Player:init(x, y)
+function BouncingBlock:init(x, y)
     self.__superInit(self, x, y)
     self.width = 16
     self.height = 16
@@ -58,19 +58,19 @@ local op = ClassName
 -- Set Methods
 
 --[[
-    This shouldn't exist in the player class.
-    The player should be asking the world to move,
-    and the world should tell the player if it can.
+    This shouldn't exist in the bouncingblock class.
+    The bouncingblock should be asking the world to move,
+    and the world should tell the bouncingblock if it can.
 --]]
-function Player:setMap(tilemap)
+function BouncingBlock:setMap(tilemap)
     self.__tilemap = tilemap
 end
 
-function Player:draw()
+function BouncingBlock:draw()
     gfx.fillRect(self.x, self.y, self.width, self.height)
 end
 
-function Player:drawDebug()
+function BouncingBlock:drawDebug()
     -- At the top left corner draw the full velocity
     gfx.drawLine(
         self.x, self.y,
@@ -97,15 +97,32 @@ function Player:drawDebug()
 end
 
 --[[
-    This should be done by the world, not the player.
+    This should be done by the world, not the bouncingblock.
     this is for development purposes only.
 
     That will be implemented later.
 --]]
-function Player:checkCollisions()
+function BouncingBlock:checkCollisions()
+    local checkX = self.__tilemap:getTileAt(Point(self.x + self.velocity.x, self.y))
+    local checkY = self.__tilemap:getTileAt(Point(self.x, self.y + self.velocity.y))
+    local collision = false
+
+    if checkX == 1 then
+        self.velocity.x = -self.velocity.x
+        self.x = self.x + self.velocity.x
+        collision = true
+    end
+
+    if checkY == 1 then
+        self.velocity.y = -self.velocity.y
+        self.y = self.y + self.velocity.y
+        collision = true
+    end
+
+    return collision
 end
 
-function Player:update()
+function BouncingBlock:update()
     if not self:checkCollisions() then
         self.x = self.x + self.velocity.x
         self.y = self.y + self.velocity.y

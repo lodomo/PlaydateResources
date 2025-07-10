@@ -35,7 +35,7 @@ import("scripts/libs/class") -- Every class depends on this
 import("scripts/classes/point")
 import("scripts/classes/vector") -- Extends Point
 
-import("scripts/classes/player")
+import("scripts/classes/bouncingblock")
 
 import("scripts/classes/tilemap")
 --]]

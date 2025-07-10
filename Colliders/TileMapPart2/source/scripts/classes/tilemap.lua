@@ -89,7 +89,7 @@ function TileMap:getTileAt(point)
         (row - 1) * self.__cell_size + self.__origin.x,
         (col - 1) * self.__cell_size + self.__origin.y)
 
-    return self[row][col], cell_origin, cell_size
+    return self[row][col], cell_origin, self.__cell_size
 end
 
 function TileMap:drawCellFilled(row, col)
