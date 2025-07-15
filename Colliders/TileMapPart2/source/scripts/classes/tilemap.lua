@@ -6,16 +6,11 @@ local gfx = pd.graphics
 --]]
 
 -- Define Data Members
-function TileMap:init(rows, cols, cellSize, origin, originY)
+function TileMap:init(rows, cols, cellSize, origin)
     self.__rows = rows
     self.__cols = cols
     self.__cell_size = cellSize or 16
-
-    if origin:type() == "point" then
-        self.__origin = Point(origin.x, origin.y)
-    else
-        self.__origin = Point(origin or 0, originY or 0)
-    end
+    self.__origin = origin:copy() or Point(0, 0)
 
     for row = 1, self.__rows do
         self[row] = {}
@@ -26,7 +21,7 @@ function TileMap:init(rows, cols, cellSize, origin, originY)
 end
 
 --[[ Operator Overloading
-local op = TileMap 
+local op = TileMap
 -- self + other
 -- function op:__add(other) end
 -- self - other
@@ -81,13 +76,18 @@ function TileMap:floodCol(col, value)
 end
 
 function TileMap:getTileAt(point)
-
     local row = math.floor((point.y - self.__origin.y) / self.__cell_size) + 1
     local col = math.floor((point.x - self.__origin.x) / self.__cell_size) + 1
 
     local cell_origin = Point(
         (row - 1) * self.__cell_size + self.__origin.x,
         (col - 1) * self.__cell_size + self.__origin.y)
+
+    if self.__debug_draw then
+        gfx.drawRect(
+            cell_origin.x, cell_origin.y,
+            self.__cell_size, self.__cell_size)
+    end
 
     return self[row][col], cell_origin, self.__cell_size
 end

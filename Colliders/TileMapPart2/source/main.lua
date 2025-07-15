@@ -2,15 +2,16 @@ import "scripts/_imports"
 
 local pd = playdate
 local gfx = pd.graphics
-pd.display.setRefreshRate(1)
+pd.display.setRefreshRate(30)
 
 ROWS = 30
 COLS = 50
 CELL = 8
 ORIGIN = Point(0, 0)
 TILE_MAP = TileMap(ROWS, COLS, CELL, ORIGIN)
+TILE_MAP.__debug_draw = true
 
-BOUNCING_BLOCK = BouncingBlock(20, 20)
+BOUNCING_BLOCK = BouncingBlock(50, 50)
 BOUNCING_BLOCK:setMap(TILE_MAP)
 
 local function update()

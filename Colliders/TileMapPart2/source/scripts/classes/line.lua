@@ -58,9 +58,17 @@ end
 --]]
 
 -- Set Methods
-function Line:func()
-    -- Function body
-    -- self.datamember will access -this- tables datamember
-    -- Example: self.x = self.x + 1
-    -- Using : will secretly pass the object as the first argument
+function Line:lerp(t)
+    return Point(Lerp(self.a.x, self.b.x, t), Lerp(self.a.y, self.b.y, t))
+end
+
+function Line:asPoints()
+    local length = #self
+    local points = {}
+    local step = 100 / length
+    for i = 1, length + 1 do
+        points[i] = self:lerp((i - 1) * step)
+    end
+
+    return points
 end

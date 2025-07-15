@@ -67,6 +67,10 @@ function BouncingBlock:setMap(tilemap)
 end
 
 function BouncingBlock:draw()
+    -- Set color to white
+    gfx.setColor(gfx.kColorWhite)
+    gfx.fillRect(self.x - 1, self.y - 1, self.width + 2, self.height + 2)
+    gfx.setColor(gfx.kColorBlack)
     gfx.fillRect(self.x, self.y, self.width, self.height)
 end
 
@@ -98,33 +102,44 @@ end
 
 --[[
     This should be done by the world, not the bouncingblock.
-    this is for development purposes only.
+    thi is for development purposes only.
 
     That will be implemented later.
 --]]
 function BouncingBlock:checkCollisions()
-    local checkX = self.__tilemap:getTileAt(Point(self.x + self.velocity.x, self.y))
-    local checkY = self.__tilemap:getTileAt(Point(self.x, self.y + self.velocity.y))
-    local collision = false
+    local checkPosition = Point(self.x + self.velocity.x, self.y + self.velocity.y)
+    local xy_col = false
+    local x_col = false
+    local y_col = false
 
-    if checkX == 1 then
-        self.velocity.x = -self.velocity.x
-        self.x = self.x + self.velocity.x
-        collision = true
+    if self.velocity.x > 0 then
+        checkPosition:move_x(self.width)
     end
 
-    if checkY == 1 then
-        self.velocity.y = -self.velocity.y
-        self.y = self.y + self.velocity.y
-        collision = true
+    if self.velocity.y > 0 then
+        checkPosition:move_y(self.height)
     end
 
-    return collision
+    -- Check X/Y collisions
+    local tile, cell_origin, cell_size = self.__tilemap:getTileAt(checkPosition)
+    if tile == 1 then
+        -- If the tile is solid, we have a collision
+        xy_col = true
+    end
+
+    -- Check X collisions
+
+    -- Check Y collisions
+
+    return xy_col or x_col or y_col
 end
 
 function BouncingBlock:update()
-    if not self:checkCollisions() then
-        self.x = self.x + self.velocity.x
-        self.y = self.y + self.velocity.y
+    if self:checkCollisions() then
+        -- If there is a collision, reverse the velocity
+        self.velocity.x = -self.velocity.x
+        self.velocity.y = -self.velocity.y
     end
+
+    -- self:move(self.velocity.x, self.velocity.y)
 end
