@@ -10,7 +10,7 @@ function BouncingBlock:init(x, y)
     self.__superInit(self, x, y)
     self.width = 16
     self.height = 16
-    self.velocity = Vector(4, 4)
+    self.velocity = Vector(20, -20)
 end
 
 --[[ Operator Overloading
@@ -66,6 +66,11 @@ function BouncingBlock:setMap(tilemap)
     self.__tilemap = tilemap
 end
 
+function BouncingBlock:setVelocity(x, y)
+    self.velocity.x = x
+    self.velocity.y = y
+end
+
 function BouncingBlock:draw()
     -- Set color to white
     gfx.setColor(gfx.kColorWhite)
@@ -107,29 +112,37 @@ end
     That will be implemented later.
 --]]
 function BouncingBlock:checkCollisions()
-    local checkPosition = Point(self.x + self.velocity.x, self.y + self.velocity.y)
     local xy_col = false
     local x_col = false
     local y_col = false
 
+    local corner = Point(self.x, self.y)
+
     if self.velocity.x > 0 then
-        checkPosition:move_x(self.width)
+        corner:move_x(self.width)
     end
 
     if self.velocity.y > 0 then
-        checkPosition:move_y(self.height)
+        corner:move_y(self.height)
     end
 
-    -- Check X/Y collisions
-    local tile, cell_origin, cell_size = self.__tilemap:getTileAt(checkPosition)
-    if tile == 1 then
-        -- If the tile is solid, we have a collision
-        xy_col = true
-    end
+    local corner_and_velocity = corner + self.velocity
+
+    local x_corner = corner_and_velocity // corner
+    local y_corner = corner // corner_and_velocity
+
+    gfx.fillCircleAtPoint(corner.x, corner.y, 3)
+    gfx.fillCircleAtPoint(corner_and_velocity.x, corner_and_velocity.y, 3)
+    gfx.fillCircleAtPoint(x_corner.x, x_corner.y, 3)
+    gfx.fillCircleAtPoint(y_corner.x, y_corner.y, 3)
 
     -- Check X collisions
+    -- Needs to check in the X direction at the corner that is "moving"
+    -- Needs to check in the Velocity Vector at the edge that is moving
 
     -- Check Y collisions
+
+    -- Check X/Y collisions
 
     return xy_col or x_col or y_col
 end

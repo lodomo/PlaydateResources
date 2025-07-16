@@ -80,8 +80,8 @@ function TileMap:getTileAt(point)
     local col = math.floor((point.x - self.__origin.x) / self.__cell_size) + 1
 
     local cell_origin = Point(
-        (row - 1) * self.__cell_size + self.__origin.x,
-        (col - 1) * self.__cell_size + self.__origin.y)
+        (col - 1) * self.__cell_size + self.__origin.x,
+        (row - 1) * self.__cell_size + self.__origin.y)
 
     if self.__debug_draw then
         gfx.drawRect(
@@ -89,7 +89,7 @@ function TileMap:getTileAt(point)
             self.__cell_size, self.__cell_size)
     end
 
-    return self[row][col], cell_origin, self.__cell_size
+    return self[row][col], cell_origin
 end
 
 function TileMap:drawCellFilled(row, col)
