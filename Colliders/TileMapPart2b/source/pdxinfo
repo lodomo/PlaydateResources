@@ -1,0 +1,9 @@
+name=Template
+author=AuthorName
+description=Description
+bundleID=com.website
+version=0.1
+buildNumber=1
+imagePath=/images/launcher
+launchSoundPath=sounds/launcher
+contentWarning=Content Warning
