@@ -73,10 +73,10 @@ end
 
 function BouncingBlock:draw()
     -- Set color to white
-    gfx.setColor(gfx.kColorWhite)
-    gfx.fillRect(self.x - 1, self.y - 1, self.width + 2, self.height + 2)
+    --gfx.setColor(gfx.kColorWhite)
+    --gfx.fillRect(self.x - 1, self.y - 1, self.width + 2, self.height + 2)
     gfx.setColor(gfx.kColorBlack)
-    gfx.fillRect(self.x, self.y, self.width, self.height)
+    gfx.drawRect(self.x, self.y, self.width, self.height)
 end
 
 function BouncingBlock:drawDebug()
@@ -111,44 +111,36 @@ end
 
     That will be implemented later.
 --]]
-function BouncingBlock:checkCollisions()
-    local xy_col = false
-    local x_col = false
-    local y_col = false
+function BouncingBlock:checkTileCollisions()
+    --check UP
+    if self.velocity.y < 0 then
+        local check_point = Point(self.x, self.y + self.velocity.y)
+        for points in ((self.width - self.velocity.x)/self.__tilemap.getCellSize()) do
 
-    local corner = Point(self.x, self.y)
-
-    if self.velocity.x > 0 then
-        corner:move_x(self.width)
+        end
     end
 
+    --check DOWN
     if self.velocity.y > 0 then
-        corner:move_y(self.height)
     end
 
-    local corner_and_velocity = corner + self.velocity
+    --check LEFT
+    if self.velocity.x < 0 then
+    end
 
-    local x_corner = corner_and_velocity // corner
-    local y_corner = corner // corner_and_velocity
+    --check RIGHT
+    if self.velocity.x > 0 then
+    end
 
-    gfx.fillCircleAtPoint(corner.x, corner.y, 3)
-    gfx.fillCircleAtPoint(corner_and_velocity.x, corner_and_velocity.y, 3)
-    gfx.fillCircleAtPoint(x_corner.x, x_corner.y, 3)
-    gfx.fillCircleAtPoint(y_corner.x, y_corner.y, 3)
+    --check DIAGONAL
+    if self.velocity.x ~= 0 and self.velocity.y ~= 0 then
+    end
 
-    -- Check X collisions
-    -- Needs to check in the X direction at the corner that is "moving"
-    -- Needs to check in the Velocity Vector at the edge that is moving
-
-    -- Check Y collisions
-
-    -- Check X/Y collisions
-
-    return xy_col or x_col or y_col
+    return false
 end
 
 function BouncingBlock:update()
-    if self:checkCollisions() then
+    if self:checkTileCollisions() then
         -- If there is a collision, reverse the velocity
         self.velocity.x = -self.velocity.x
         self.velocity.y = -self.velocity.y

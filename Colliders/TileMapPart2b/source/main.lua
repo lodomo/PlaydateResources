@@ -2,7 +2,7 @@ import "scripts/_imports"
 
 local pd = playdate
 local gfx = pd.graphics
-pd.display.setRefreshRate(30)
+pd.display.setRefreshRate(50)
 
 ROWS = 30
 COLS = 50

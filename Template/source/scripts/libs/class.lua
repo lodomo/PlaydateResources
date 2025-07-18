@@ -1,7 +1,7 @@
 -- Lodomo Lua Class System
 -- Copyright (c) 2025 Lodomo.Dev
 
---  CLASS MAP 
+--  CLASS MAP
 --  This map will be used as a registry for all classes created.
 --  class_by_num: A table that maps class numbers to class objects.
 --  num_by_class: A table that maps class names to their respective numbers.
@@ -103,19 +103,49 @@ end
 --  Work in progress. TODO
 --  @return nil
 function Object:print()
+    print("No Custom Print Function Defined")
+    print("Defaulting to obj:dumpPrint()")
+    self:dumpPrint()
+end
+
+function Object:dumpPrint()
     print("Class: " .. self:type())
+
     if self.__super_types then
         local in_str = "Inherited Classes: "
         for i = 1, #self.__super_types do
-            in_str = in_str .. self.__super_types[i].__type
+            local super_index = self.__super_types[i]
+            local super_class = ClassMap.class_by_num[super_index]
+            if super_class and super_class.__type then
+                in_str = in_str .. super_class.__type
+            end
+
             if i < #self.__super_types then
                 in_str = in_str .. ", "
             end
         end
         print(in_str)
     end
-    for k, v in pairs(self) do
-        print(k, v)
+
+    print("Properties:")
+    for key, value in pairs(self) do
+        if type(value) ~= "function" then
+            print("  " .. key .. ": " .. tostring(value))
+        end
+    end
+
+    print("Methods:")
+    local seen = {}
+    local current = getmetatable(self)
+
+    while current do
+        for key, value in pairs(current) do
+            if type(value) == "function" and not key:match("^__") and not seen[key] then
+                print("  " .. key)
+                seen[key] = true
+            end
+        end
+        current = getmetatable(current)
     end
 end
 

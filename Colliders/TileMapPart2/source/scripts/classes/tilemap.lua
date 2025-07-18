@@ -62,6 +62,11 @@ local op = TileMap
 -- function op:__le(other) end
 --]]
 
+-- Public Properties
+function TileMap:getCellSize()
+    return self.__cell_size
+end
+
 -- Set Methods
 function TileMap:floodRow(row, value)
     for col = 1, self.__cols do
